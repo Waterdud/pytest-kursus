@@ -89,63 +89,54 @@ def test_add_basic():
           <div id="unique-sum-result" class="result"></div>
         </div>
         
-      <!-- sub -->
         <div class="function-test">
           <h4>sub(a, b)</h4>
           <button onclick="testSub()">Testi</button>
           <div id="result-sub" class="result"></div>
         </div>
 
-        <!-- mul -->
         <div class="function-test">
           <h4>mul(a, b)</h4>
           <button onclick="testMul()">Testi</button>
           <div id="result-mul" class="result"></div>
         </div>
 
-        <!-- div -->
         <div class="function-test">
           <h4>div(a, b)</h4>
           <button onclick="testDiv()">Testi</button>
           <div id="result-div" class="result"></div>
         </div>
 
-        <!-- sum_list -->
         <div class="function-test">
           <h4>sum_list(nums)</h4>
           <button onclick="testSumList()">Testi</button>
           <div id="result-sumlist" class="result"></div>
         </div>
 
-        <!-- is_even -->
         <div class="function-test">
           <h4>is_even(n)</h4>
           <button onclick="testIsEven()">Testi</button>
           <div id="result-iseven" class="result"></div>
         </div>
 
-        <!-- factorial -->
         <div class="function-test">
           <h4>factorial(n)</h4>
           <button onclick="testFactorial()">Testi</button>
           <div id="result-factorial" class="result"></div>
         </div>
 
-        <!-- reverse_string -->
         <div class="function-test">
           <h4>reverse_string(s)</h4>
           <button onclick="testReverseString()">Testi</button>
           <div id="result-reversestring" class="result"></div>
         </div>
 
-        <!-- is_palindrome -->
         <div class="function-test">
           <h4>is_palindrome(s)</h4>
           <button onclick="testIsPalindrome()">Testi</button>
           <div id="result-ispalindrome" class="result"></div>
         </div>
 
-        <!-- to_title_case -->
         <div class="function-test">
           <h4>to_title_case(s)</h4>
           <button onclick="testToTitleCase()">Testi</button>
@@ -206,6 +197,25 @@ def test_unique_sorted_basic():
         </div>
       </div>
       
+      <h2>B. Lisa B-osa (b_collections_io.py) jaoks 3 uut funktsiooni index.html lehele      </h2>
+      <div class="function-test">
+        <h4>sum_unique([1,2,2,3,3,3])</h4>
+        <button onclick="testSumUnique()">Testi</button>
+        <div id="sum-unique-result" class="result"></div>
+      </div>
+      
+      <div class="function-test">
+        <h4>dict_invert({"a":1, "b":2, "c":3})</h4>
+        <button onclick="testDictInvert()">Testi</button>
+        <div id="dict-invert-result" class="result"></div>
+      </div>
+      
+      <div class="function-test">
+        <h4>frequencies([1,2,2,3,3,3])</h4>
+        <button onclick="testFrequencies()">Testi</button>
+        <div id="frequencies-result" class="result"></div>
+      </div>
+      
       <h3>Näide testist</h3>
       <pre><code># Näide (konto test)
 def test_account_withdraw_overdraft():
@@ -223,7 +233,6 @@ def test_account_withdraw_overdraft():
   </main>
 
   <script>
-    // B-OSA FUNKTSIOONID (mõned vigased)
     
     function unique_sorted(nums) {
       return nums.filter((value, index, self) => self.indexOf(value) === index).sort((a, b) => a - b);
@@ -290,7 +299,6 @@ def test_account_withdraw_overdraft():
       return s.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
     }
     
-    // C-OSA FUNKTSIOONID (mõned vigased)
     
     function fibonacci(n) {
       if (n < 0) throw new Error("Negatiivse arvu Fibonacci ei ole defineeritud");
@@ -326,9 +334,7 @@ def test_account_withdraw_overdraft():
       }
       return result;
     }
-    
-    // TESTID
-    
+        
     function showResult(elementId, isPass, message) {
       const element = document.getElementById(elementId);
       element.className = `result ${isPass ? 'pass' : 'fail'}`;
@@ -530,16 +536,72 @@ def test_account_withdraw_overdraft():
     
     function testBankAccount() {
       try {
-        // Lihtne konto test
         const acc = { balance: 10 };
         const canWithdraw = acc.balance >= 11;
-        const isCorrect = !canWithdraw; // Ei tohi lubada üle võtta
+        const isCorrect = !canWithdraw; 
         showResult('bank-account-result', isCorrect, 
           `Saldo: ${acc.balance} | Üle võtmine 11: ${canWithdraw ? 'LUBATUD' : 'KEELATUD'} | ${isCorrect ? 'PASS' : 'FAIL'}`);
       } catch (error) {
         showResult('bank-account-result', false, `VIGA: ${error.message}`);
       }
     }
+
+    function sum_unique(nums) {
+  const unique = [...new Set(nums)];
+  return unique.reduce((acc, val) => acc + val, 0);
+}
+
+function dict_invert(d) {
+  const inverted = {};
+  for (const [key, value] of Object.entries(d)) {
+    inverted[value] = key;
+  }
+  return inverted;
+}
+
+function frequencies(nums) {
+  const freq = {};
+  for (const n of nums) {
+    freq[n] = (freq[n] || 0) + 1;
+  }
+  return freq;
+}
+
+function testSumUnique() {
+  try {
+    const result = sum_unique([1,2,2,3,3,3]);
+    const expected = 6; // 1 + 2 + 3
+    const isCorrect = result === expected;
+    showResult('sum-unique-result', isCorrect, `Tulemus: ${result} | Oodatud: ${expected} | ${isCorrect ? 'PASS' : 'FAIL'}`);
+  } catch (error) {
+    showResult('sum-unique-result', false, `VIGA: ${error.message}`);
+  }
+}
+
+function testDictInvert() {
+  try {
+    const input = {"a":1, "b":2, "c":3};
+    const result = dict_invert(input);
+    const expected = {"1":"a", "2":"b", "3":"c"};
+    const isCorrect = JSON.stringify(result) === JSON.stringify(expected);
+    showResult('dict-invert-result', isCorrect, `Tulemus: ${JSON.stringify(result)} | Oodatud: ${JSON.stringify(expected)} | ${isCorrect ? 'PASS' : 'FAIL'}`);
+  } catch (error) {
+    showResult('dict-invert-result', false, `VIGA: ${error.message}`);
+  }
+}
+
+function testFrequencies() {
+  try {
+    const input = [1,2,2,3,3,3];
+    const result = frequencies(input);
+    const expected = {"1":1, "2":2, "3":3};
+    const isCorrect = JSON.stringify(result) === JSON.stringify(expected);
+    showResult('frequencies-result', isCorrect, `Tulemus: ${JSON.stringify(result)} | Oodatud: ${JSON.stringify(expected)} | ${isCorrect ? 'PASS' : 'FAIL'}`);
+  } catch (error) {
+    showResult('frequencies-result', false, `VIGA: ${error.message}`);
+  }
+}
+
   </script>
 </body>
 </html>
